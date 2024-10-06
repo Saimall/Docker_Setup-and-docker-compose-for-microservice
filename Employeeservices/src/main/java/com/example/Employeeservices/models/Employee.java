@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+
 @Entity
 public class Employee {
 	
@@ -13,27 +14,17 @@ public class Employee {
 	private int id;
 	
 	private String empname;
-	
+
 	public Employee() {
 		
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "Employee [id=" + id + ", empname=" + empname + "]";
-	}
 
-	
-	
 	public Employee(int id, String empname) {
-		super();
+		
 		this.id = id;
 		this.empname = empname;
 	}
 
-
-	
 	public int getId() {
 		return id;
 	}
@@ -50,5 +41,11 @@ public class Employee {
 		this.empname = empname;
 	}
 
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", empname=" + empname + "]";
+	}
+	
+	
 
 }
