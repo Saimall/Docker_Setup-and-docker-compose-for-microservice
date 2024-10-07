@@ -1,17 +1,11 @@
-package com.example.Employeeservices.models;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.example.Employeeservices.dtos;
 
 
-@Entity
-public class Employee {
+
+
+public class Employeepojo {
 	
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	private int id;
+private int id;
 	
 	
 	private int departmentId;
@@ -29,11 +23,11 @@ public class Employee {
 
 	
 
-	public Employee() {
+	public Employeepojo() {
 		
 	}
 
-	public Employee(int id, String empname,int departmentId) {
+	public Employeepojo(int id, String empname,int departmentId) {
 		
 		this.id = id;
 		this.empname = empname;

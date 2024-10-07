@@ -2,8 +2,11 @@ package com.example.Employeeservices.controllers;
 
 
 import org.slf4j.LoggerFactory;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Employeeservices.models.Employee;
@@ -23,6 +28,7 @@ import java.io.Console;
 import java.util.*;
 
 @RestController
+@RequestMapping("/employee")
 public class Empcontroller {
 	
 	@Autowired
@@ -76,6 +82,14 @@ public class Empcontroller {
 		LOG.info("Hello delete employee");
 		
 		empservice.deleteservice(id);
+		
+	}
+	
+	
+	@GetMapping("/Getallemployeesbydepartment/{id}")
+	public ResponseEntity<?> getallemployeesbydepartment(@PathVariable int id){
+		
+		return new ResponseEntity<>(empservice.getallEmployeesbydepartmentid(id),HttpStatus.OK);
 		
 	}
 	

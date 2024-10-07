@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Departmentservice.dtos.Departmentpojo;
 import com.example.Departmentservice.models.Department;
 import com.example.Departmentservice.service.Departmentservice;
 
 @RestController
+//#All routes must be small
+@RequestMapping("/department")
 public class Shubham {
 	
 	@Autowired
@@ -64,5 +69,17 @@ public static final Logger LOG = LoggerFactory.getLogger(Shubham.class);
 		return alldepartments;
 		
 	}
+	
+	@GetMapping("/getdepartmentbyid/{id}")
+	public Departmentpojo getDepartmentbyid(@PathVariable int id) {
+		
+		Departmentpojo department = departmentservice.finddepartmentbyid(id);
+      	
+		return department;
+		
+	}
+	
+	
+	
 
 }
