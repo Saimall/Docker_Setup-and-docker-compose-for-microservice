@@ -14,7 +14,6 @@ import com.example.Departmentservice.dtos.Employeepojo;
 import com.example.Departmentservice.models.Department;
 import com.example.Departmentservice.repository.DepartmentRepo;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Service
 
@@ -61,7 +60,7 @@ public class Departmentservice {
 	}
 
 
-	@CircuitBreaker(name="ciremp", fallbackMethod = "fallbackEmployee")
+	
 	public Departmentpojo finddepartmentbyid(int id) {
 		
 		Optional<Department> departmentOptional = departmentrepo.findById(id);
@@ -79,10 +78,6 @@ public class Departmentservice {
 		
 	}
 	
-	public Departmentpojo fallbackEmployee() {
-		return new Departmentpojo(0,"fallback",null, null);
-		
-	}
 	
 	
 
