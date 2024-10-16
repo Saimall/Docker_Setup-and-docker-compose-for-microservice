@@ -1,0 +1,107 @@
+services:
+  registry-sr:
+    image: eurekaregistry
+    build: ./Eurekaregistry
+    ports:
+      - "8761:8761"
+    networks:
+      - sainetwork
+    container_name: microservices-setup_registry-sr_1
+
+  authentication-sr:
+    image: springsecurity
+    build: ./springsecuirtydemo
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-auth:5432/secuirtydemo
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 0000
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8083:8083"
+    networks:
+      - sainetwork
+    depends_on:
+      - registry-sr
+      - api-gateway-sr
+      - postgres-auth
+
+  department-sr:
+    image: departmentservice
+    build: ./Departmentservice
+    environment:
+     SPRING_DATASOURCE_URL:jdbc: postgresql://postgres-department:5432/department
+     SPRING_DATASOURCE_USERNAME: postgres
+     SPRING_DATASOURCE_PASSWORD: 0000
+     SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8081:8081"
+    networks:
+      - sainetwork
+    depends_on:
+      - registry-sr
+      - api-gateway-sr
+      - postgres-department
+
+  employee-sr:
+    image: employeeservice
+    build: ./Employeeservices
+    environment:
+     SPRING_DATASOURCE_URL:jdbc: postgresql://postgres-employee:5432/employee
+     SPRING_DATASOURCE_USERNAME: postgres
+     SPRING_DATASOURCE_PASSWORD: 0000
+     SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8082:8082"
+    networks:
+      - sainetwork
+    depends_on:
+      - registry-sr
+      - api-gateway-sr
+      - postgres-employee
+
+  api-gateway-sr:
+    image: apigateway
+    build: ./APIGateway
+    ports:
+      - "8060:8060"
+    networks:
+      - sainetwork
+    depends_on:
+      - registry-sr
+
+  postgres-auth:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0000
+      POSTGRES_DB: secuirtydemo
+    ports:
+      - "5433:5432"  
+    networks:
+      - sainetwork
+
+  postgres-department:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0000
+      POSTGRES_DB: department
+    ports:
+      - "5434:5432"  # Exposing different port for department DB
+    networks:
+      - sainetwork
+
+  postgres-employee:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0000
+      POSTGRES_DB: employee
+    ports:
+      - "5435:5432"  # Exposing different port for employee DB
+    networks:
+      - sainetwork
+
+networks:
+  sainetwork:
+    driver: bridge

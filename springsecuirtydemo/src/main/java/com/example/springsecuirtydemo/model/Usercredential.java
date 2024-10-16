@@ -19,5 +19,8 @@ public class Usercredential {
 	private int id;
 	private String username;
 	private String password;
+	
+	
+	
 
 }
